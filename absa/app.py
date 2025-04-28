@@ -7,11 +7,10 @@ import torch
 app = FastAPI()
 
 # Load model and tokenizer
-model_path = "./bert_department_model" # .pt uzantısını kaldırdım ve klasör yolunu belirttim
-tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")  # Önce temel modeli yükle
+model_path = "./bert_department_model" 
+tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")  
 model = BertForSequenceClassification.from_pretrained("bert-base-uncased", num_labels=6)  # Temel modeli 6 sınıf için yapılandır
 
-# Eğer kaydedilmiş ağırlıklar varsa yükle
 try:
     model.load_state_dict(torch.load("bert_department_model.pt", map_location=device))
     print("Model ağırlıkları başarıyla yüklendi.")
@@ -23,7 +22,7 @@ model.eval()
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model.to(device)
 
-# Label mapping (manuel olarak girmen gerek)
+
 label_mapping = {
     0: "Trend",
     1: "Jackets",
